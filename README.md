@@ -3,6 +3,7 @@ Traitement des donnees HZ (Molonari-mini)
 ========================
 The purpose of this script is to process the field data and to transform the pressure differences recorded in volt into cm
 The scripts are in order that they should be executed.
+Il est nécessaire d'avoir télécharger en amont  calibration_molonari_mini dans lequel est contenu calib et scripts_R
 
 syncHZ.R
 -
@@ -13,17 +14,17 @@ syncHZ.R
 processHobo_mini.R
 -
 	lit les donnees HZ (mini-Lomos)
-	fait un premier traitement des donnees et enregistre dans Avenelles/processed_data_KC/
+	fait un premier traitement des donnees et enregistre dans processed_data_KC/
 
 treatTempHobo.R
 -
-	MOVED TO POSTPROCESSING FOLDERS : 01a_NumExp\field_database\1_data-hz_to_ginette\scripts_R
+	MOVED TO POSTPROCESSING FOLDERS : scripts_R
 	ce script sert a traiter les donnees de temperature.
 
 tensionToHead.R
 -
 		1) pointsHZ_metadonnees.csv à compléter dans \raw_data\DESC_data\DATA_SENSOR\geometrieEtNotices_miniLomos
-		2) Vérifier que le capteur de pression est bien calibre dans raw_data\DESC_data\DATA_SENSOR\capteurs_pression\calibration\calib
+		2) Vérifier que le capteur de pression est bien calibre dans le répertoire calib
 		vous devez avoir calibfit_sensorname.csv avec trois lignes 
 			Intercept;xxxxxx
 			dU/dH;xxxxxxx
