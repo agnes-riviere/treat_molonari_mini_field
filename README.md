@@ -20,14 +20,14 @@ The scripts are in order that they should be executed.
 
 > tensionToHead.R
 	Etapes preliminaires
-	1) pointsHZ_metadonnees.csv à compléter dans \Avenelles\raw_data\DESC_data\DATA_SENSOR\geometrieEtNotices_miniLomos
-	2) Vérifier que le capteur de pression est bien calibre dans Avenelles\raw_data\DESC_data\DATA_SENSOR\capteurs_pression\calibration\calib
-	vous devez avoir calibfit_sensorname.csv avec trois lignes 
+		1) pointsHZ_metadonnees.csv à compléter dans \Avenelles\raw_data\DESC_data\DATA_SENSOR\geometrieEtNotices_miniLomos
+		2) Vérifier que le capteur de pression est bien calibre dans Avenelles\raw_data\DESC_data\DATA_SENSOR\capteurs_pression\calibration\calib
+		vous devez avoir calibfit_sensorname.csv avec trois lignes 
 			Intercept;xxxxxx
 			dU/dH;xxxxxxx
 			dU/dT;xxxxxxxxxxxxx
-	3) si vous utilise un nouveau capteur vous devez suivre la procedur de calibration et de mise en place des dossier
-	De plus, vous devez ajouter le nom du capteur dans la ligne 53 du script R tensionToHead.R
+		3) si vous utilise un nouveau capteur vous devez suivre la procedur de calibration et de mise en place des dossier
+			De plus, vous devez ajouter le nom du capteur dans la ligne 53 du script R tensionToHead.R
 	
 	ce script sert a transformer les donnees de tension mesurees par le capteur de pression en differentiel de charge.
 	Il lit les coefficients de calibration dans Avenelles/raw_data/DESC_data/DATA_SENSOR/Calibration/calib/
