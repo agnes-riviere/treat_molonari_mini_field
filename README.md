@@ -1,7 +1,7 @@
 # treat_molonari_mini_field
 Traitement des donnees HZ (Molonari-mini)
 ========================
-
+The purpose of this script is to process the field data and to transform the pressure differences recorded in volt into cm
 The scripts are in order that they should be executed.
 
 syncHZ.R
@@ -22,9 +22,8 @@ treatTempHobo.R
 
 tensionToHead.R
 -
-	Etapes preliminaires
-		1) pointsHZ_metadonnees.csv à compléter dans \Avenelles\raw_data\DESC_data\DATA_SENSOR\geometrieEtNotices_miniLomos
-		2) Vérifier que le capteur de pression est bien calibre dans Avenelles\raw_data\DESC_data\DATA_SENSOR\capteurs_pression\calibration\calib
+		1) pointsHZ_metadonnees.csv à compléter dans \raw_data\DESC_data\DATA_SENSOR\geometrieEtNotices_miniLomos
+		2) Vérifier que le capteur de pression est bien calibre dans raw_data\DESC_data\DATA_SENSOR\capteurs_pression\calibration\calib
 		vous devez avoir calibfit_sensorname.csv avec trois lignes 
 			Intercept;xxxxxx
 			dU/dH;xxxxxxx
