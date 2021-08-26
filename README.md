@@ -7,6 +7,8 @@ Il est nécessaire d'avoir télécharger en amont  calibration_molonari_mini dan
 
 Les données de terrain doivent être stockées dans treat_molonari_mini_field/raw_data/HOBO_data/
 treat_molonari_mini_field/raw_data/HOBO_data/
+
+
 syncHZ.R
 -
 	Ce script peut etre lance si la configuration des hobo a mal ete faite sur le terrain.
