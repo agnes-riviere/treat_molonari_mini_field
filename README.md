@@ -15,20 +15,20 @@ Compléter le fichier pointsHZ_metadonnees.csv avec :
 * index_du_point;
 * GPS_N;
 * GPS_E;
-*donnees_p; si les données existent mettre 1 sinon 0
-*donnees_t; si les données existent mettre 1 sinon 0
-*donnees_tstream; si les données existent mettre 1 sinon 0
-*donnees_all; si les données existent mettre 1 sinon 0
-*capteur_pression;
-*P_depth_cm;
-*T_depth_1_cm;
-*T_depth_2_cm;
-*T_depth_3_cm;
-*T_depth_4_cm;
-*date_debut_model;
-*date_debut_calib;
-*date_fin;
-*commentaires
+* donnees_p; si les données existent mettre 1 sinon 0
+* donnees_t; si les données existent mettre 1 sinon 0
+* donnees_tstream; si les données existent mettre 1 sinon 0
+* donnees_all; si les données existent mettre 1 sinon 0
+* capteur_pression;
+* P_depth_cm;
+* T_depth_1_cm;
+* T_depth_2_cm;
+* T_depth_3_cm;
+* T_depth_4_cm;
+* date_debut_model;
+* date_debut_calib;
+* date_fin;
+* commentaires
 
 L'entête du fichier doit être : nom_du_point;index_du_point;GPS_N;GPS_E;donnees_p;donnees_t;donnees_tstream;donnees_all;capteur_pression;P_depth_cm;T_depth_1_cm;T_depth_2_cm;T_depth_3_cm;T_depth_4_cm;date_debut_model;date_debut_calib;date_fin;commentaires
 
