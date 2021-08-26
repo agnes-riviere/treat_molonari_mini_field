@@ -9,7 +9,7 @@ Les données de terrain doivent être stockées dans treat_molonari_mini_field/r
 treat_molonari_mini_field/raw_data/HOBO_data/
 
 
-syncHZ.R
+syncHZ.R a utiliser en cas de problème sur le terrain de syncronisation des données.
 -
 	Ce script peut etre lance si la configuration des hobo a mal ete faite sur le terrain.
 	Il sert a recuperer des donnee a un intervalle de temps de 15min sur les quarts d'heures réguliers des heures.
