@@ -5,6 +5,8 @@ The purpose of this script is to process the field data and to transform the pre
 The scripts are in order that they should be executed.
 Il est nécessaire d'avoir télécharger en amont  calibration_molonari_mini dans lequel est contenu calib et scripts_R
 
+Les données de terrain doivent être stockées dans treat_molonari_mini_field/raw_data/HOBO_data/
+treat_molonari_mini_field/raw_data/HOBO_data/
 syncHZ.R
 -
 	Ce script peut etre lance si la configuration des hobo a mal ete faite sur le terrain.
