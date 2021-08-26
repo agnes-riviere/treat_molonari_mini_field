@@ -8,21 +8,44 @@ Il est nécessaire d'avoir télécharger en amont  calibration_molonari_mini dan
 Les données de terrain doivent être stockées dans treat_molonari_mini_field/raw_data/HOBO_data/
 treat_molonari_mini_field/raw_data/HOBO_data/
 
+1) geometrieEtNotices_miniLomos
+-
+Compléter le fichier pointsHZ_metadonnees.csv avec :
+* nom_du_point;
+* index_du_point;
+* GPS_N;
+* GPS_E;
+*donnees_p; si les données existent mettre 1 sinon 0
+*donnees_t; si les données existent mettre 1 sinon 0
+*donnees_tstream; si les données existent mettre 1 sinon 0
+*donnees_all; si les données existent mettre 1 sinon 0
+*capteur_pression;
+*P_depth_cm;
+*T_depth_1_cm;
+*T_depth_2_cm;
+*T_depth_3_cm;
+*T_depth_4_cm;
+*date_debut_model;
+*date_debut_calib;
+*date_fin;
+*commentaires
 
-syncHZ.R a utiliser en cas de problème sur le terrain de syncronisation des données.
+L'entête du fichier doit être : nom_du_point;index_du_point;GPS_N;GPS_E;donnees_p;donnees_t;donnees_tstream;donnees_all;capteur_pression;P_depth_cm;T_depth_1_cm;T_depth_2_cm;T_depth_3_cm;T_depth_4_cm;date_debut_model;date_debut_calib;date_fin;commentaires
+
+1) syncHZ.R **a utiliser en cas de problème sur le terrain de syncronisation des données.**
 -
 	Ce script peut etre lance si la configuration des hobo a mal ete faite sur le terrain.
 	Il sert a recuperer des donnee a un intervalle de temps de 15min sur les quarts d'heures réguliers des heures.
 	de maniere a ce que les donnees de pression et de température soient synchrones.
 
-processHobo_mini.R
+2) processHobo_mini.R
 -
 	lit les donnees HZ (mini-Lomos)
 	fait un premier traitement des donnees et enregistre dans processed_data_KC/
 
 
 
-tensionToHead.R
+3) tensionToHead.R
 -
 		1) pointsHZ_metadonnees.csv à compléter dans \raw_data\DESC_data\DATA_SENSOR\geometrieEtNotices_miniLomos
 		2) Vérifier que le capteur de pression est bien calibre dans le répertoire calib
@@ -36,9 +59,9 @@ tensionToHead.R
 	ce script sert a transformer les donnees de tension mesurees par le capteur de pression en differentiel de charge.
 	Il lit les coefficients de calibration dans Avenelles/raw_data/DESC_data/DATA_SENSOR/Calibration/calib/
 
-plotHoboTreated.R
+4) plotHoboTreated.R
 -
 
-	plot les donnees traitees des Hobos HZ.
-	Prend en argument les fichiers treated dans Avenelles/processed_data_KC/HZ/[point]
-	Produit le plot dans plots/PerDevice/Hobo/TREATED[point]
+plot les donnees traitees des Hobos HZ.
+Prend en argument les fichiers treated dans Avenelles/processed_data_KC/HZ/[point]
+Produit le plot dans plots/TREATED[point]
