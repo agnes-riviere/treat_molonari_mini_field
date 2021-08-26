@@ -1,4 +1,4 @@
-# treat_molonari_mini_field
+
 Traitement des donnees HZ (Molonari-mini)
 ========================
 The purpose of this script is to process the field data and to transform the pressure differences recorded in volt into cm
