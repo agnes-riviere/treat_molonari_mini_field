@@ -20,10 +20,7 @@ processHobo_mini.R
 	lit les donnees HZ (mini-Lomos)
 	fait un premier traitement des donnees et enregistre dans processed_data_KC/
 
-treatTempHobo.R
--
-	MOVED TO POSTPROCESSING FOLDERS : scripts_R
-	ce script sert a traiter les donnees de temperature.
+
 
 tensionToHead.R
 -
