@@ -1,0 +1,3 @@
+nom_du_point;index_du_point;GPS_N;GPS_E;donnees_p;donnees_t;donnees_tstream;donnees_all;capteur_pression;P_depth_cm;T_depth_1_cm;T_depth_2_cm;T_depth_3_cm;T_depth_4_cm;date_debut_model;date_debut_calib;date_fin;commentaires
+p3_aval2;aval1;48.85975;3.15143;1;1;1;1;p3;42.5;22.5;12.5;32.5;42.5;12/05/2021 17:00:00;14/05/2021 17:00:00;14/06/2021 13:00:00;
+
