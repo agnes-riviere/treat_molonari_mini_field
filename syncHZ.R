@@ -7,9 +7,9 @@ source('utils/functions_readHoboDates.R')
 
 # ---- script parameters ----
 
-namePoint = 'point20_28_10_15' # nom du point contenant les donnees a synchroniser
+namePoint = 'p3_aval2' # nom du point contenant les donnees a synchroniser
 
-pathRawData = paste0('../Avenelles/raw_data/HOBO_data/',namePoint,'/')
+pathRawData = paste0('/home/ariviere/Programmes/treat_molonari_mini_field/raw_data/HOBO_data/',namePoint,'/')
 path_nonSync = paste0(pathRawData,'non_sync/')
 
 filesNonSync = list.files(path_nonSync,pattern = '.csv')
