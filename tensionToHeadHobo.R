@@ -4,35 +4,31 @@
 # using calibration U=f(T,H) 
 ############################################################################
 
-<<<<<<< .mine
-setwd('C:/Data/Bassin-Orgeval/Donnee_Orgeval_Mines/scripts_R')
-||||||| .r137
-setwd('C:/Users/Karina/Documents/01_Dossiers/01a_NumExp/minesSvn/data-hz/scripts_R')
-=======
-# setwd('C:/Users/Karina/Documents/01_Dossiers/01a_NumExp/minesSvn/data-hz/scripts_R')
->>>>>>> .r175
+setwd('/home/ariviere/Programmes/treat_molonari_mini_field/')
+library(lubridate)
+library(data.table)
 
 Sys.setenv(TZ='UTC') # to avoid the problem of daylight saving
 
 # ---- definition of paths ----
 
-# path with tension measurements
-pathProcessed = '../Avenelles/processed_data_KC/HZ/'
+
+#path to store processed data
+pathProcessed=paste0(getwd(),'/processed_data/')
 # path with description of measurements
-pathDesc = '../Avenelles/raw_data/DESC_data/DATA_SENSOR/geometrieEtNotices_miniLomos/'
+pathDesc = 'geometrieEtNotices_miniLomos/'
 # path with calibration files of pressure sensors
-pathCalib = paste0('../Avenelles/raw_data/DESC_data/DATA_SENSOR/',
-                   'capteurs_pression/calibration/calib/')
+pathCalib = paste0('/home/ariviere/Programmes/calibration_molonari_mini/calib/')
 
 
 # ---- get metadata for all points ----
 metaDataFile <- paste0(pathDesc,'pointsHZ_metadonnees.csv')
 metaData <- read.csv(file = metaDataFile,header = T,
-                       sep = ',',dec = '.',colClasses = 'character')
+                       sep = ';',dec = '.',colClasses = 'character')
 
 # ---- loop over HZ points ----
 
-namePoint = list.files(pathProcessed,pattern = 'point')
+namePoint = list.files(pathProcessed,pattern = 'p')
 
 for (iPoint in 1:length(namePoint)){
   
@@ -59,9 +55,7 @@ for (iPoint in 1:length(namePoint)){
     if (pressureSensor=="p502") {pressureSensor <- "p509"}
     
     # process only if the pressure sensor is calibrated
-    if(!(pressureSensor %in% c('p505','p506','p507','p508','p509','p520','p531','p532','p533','p534'))){
-      warning(paste0('The pressure sensor for ',namePoint[iPoint],' not calibrated. Skipping the conversion.'))
-    }else{
+
       
       print(paste0('applying calibration to point ',namePoint[iPoint]))
       
@@ -69,7 +63,7 @@ for (iPoint in 1:length(namePoint)){
 
       dataCalib <- 
         read.csv(paste0(pathCalib,pressureSensor,'/calibfit_',pressureSensor,'.csv'),
-                 sep=';',header=F,colClasses=c('character','numeric'))
+                 sep=',',header=F,colClasses=c('character','numeric'))
       paramCalibFit <- as.list(dataCalib[,2]);names(paramCalibFit) <- dataCalib[,1]
       
       # ---- get tension and temperature data ----
@@ -125,9 +119,54 @@ for (iPoint in 1:length(namePoint)){
                               unlist(strsplit(tsFile,split = '.csv')),
                               '_treatedToHead_noTcorrection','.csv'),
                   dec='.',row.names=F,sep=',',quote = F)
-    }
+    
     
   }
   
+  # ---- plot raw data ----
+  
+  temperatureCols = c('blue',terrain.colors(6))
+  tsFileT = allFiles[which(substr(allFiles,1,1)=='t')]
+  dataProcessedT = read.csv(paste0(pathProcessed,'/',namePoint[iPoint],'/',tsFileT),
+                            header=T,sep=',',
+                            colClasses=c('character','character','numeric','numeric','numeric','numeric'))
+  
+  png(file = paste0(getwd(),'/plots/CLEAN',listHobo[i],'.png'),
+      width = 1000,height=700)
+  dates_i = strptime( dataTreated$dates,'%d/%m/%Y %H:%M:%S')
+  plot(x=dates_i,y=  tsTreated,
+       pch=19,cex=0.3,ylim=range(dataTreated$pressure_differential_m,na.rm=T),
+       main=listHobo[i],xlab='dates',ylab='Delta H [m]',xaxt='n',col="red")
+  points(x=dates_i,y=  tsTreated_noTcorrection,
+         pch=19,cex=0.3)
+  axis.POSIXct(side = 1,at = pretty(dates_i),format='%d/%m/%Y')
+  par(new=T)
+  ylimRaw = range(data.frame(dataProcessedT[,3:6],dataTreated$temperature_stream_C),na.rm=T)
+  ylimMin = max(0,ylimRaw[1])
+  ylimMax = min(25,ylimRaw[2])
+  plot(x=dates_i,y=rep(NA,length=length(dates_i)),
+       ylim=c(ylimMin,ylimMax),
+       xaxt='n',yaxt='n',xlab='',ylab='',
+       col='red',pch=19,cex=0.3)
+  points(x=dates_i,y=dataTreated$temperature_stream_C,pch=19,cex=0.3,
+         col=temperatureCols[1])
+  for (j in 3:7){
+    points(x=dates_i,y=dataProcessedT[,j],pch=19,cex=0.3,
+           col=temperatureCols[j])
+  }
+  axis(4)
+  mtext('temperature [C]',side=4,line=3)
+  
+  
+  legend('bottomright',legend = c('pressure differential','pressure differential_no_T',
+                                  'temperature in the stream',
+                                  paste('temperature depth', 1:4)),
+         col=c('red','black',temperatureCols[1:5]),pch=19)
+  
+dev.off()  
 }
+
+
+
+
 
