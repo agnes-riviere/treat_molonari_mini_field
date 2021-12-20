@@ -142,7 +142,9 @@ formatHoboDate = function(datesStrHoboRaw){
   } else if (is.na(as.numeric(difftime(strptime(datesStrHoboRaw[2], format="%m/%d/%Y  %H:%M"),strptime(datesStrHoboRaw[1], format="%m/%d/%Y  %H:%M"),units="mins")))==FALSE) {
     datesHoboRaw = strptime(datesStrHoboRaw,format = '%m/%d/%Y %H:%M:%S')
     datesStrHoboRaw = format(datesHoboRaw,'%d/%m/%Y %H:%M:%S')
-} else  {
+} 
+
+  else  {
   print("Pb date")}
   
   
