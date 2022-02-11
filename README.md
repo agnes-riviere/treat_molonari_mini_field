@@ -1,6 +1,14 @@
 
-Traitement des donnees HZ (Molonari-mini)
+Traitement des donnees HZ (LOMOS-mini)
 ========================
+
+If you use the documents, the scripts or the methologies decribed in this directory, cite as
+
+agnes-riviere. (2021). agnes-riviere/treat_molonari_mini_field: (Version V1). Zenodo. https://doi.org/10.5281/zenodo.5483010
+
+
+This directory contains the documents and instructions for the calibration of the LOMOS-mini sensor described in the publication (https://doi.org/10.1016/j.jhydrol.2017.10.074). All the scripts to obtain the coefficients are also given. A readme allows users to discover step by step all the necessary steps.
+
 The purpose of this script is to process the field data and to transform the pressure differences recorded in volt into cm
 The scripts are in order that they should be executed.
 Il est nécessaire d'avoir télécharger en amont  calibration_molonari_mini dans lequel est contenu calib et scripts_R
