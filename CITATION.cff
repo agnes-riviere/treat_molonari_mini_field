@@ -1,0 +1,9 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Riviere
+    given-names: Agnès
+    orcid: https://doi.org/10.5281/zenodo.5483010
+title: agnes-riviere/treat_molonari_mini_field: 
+version: V1
+date-released: 2017-12-18
