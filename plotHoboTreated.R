@@ -4,27 +4,27 @@
 # plots in plots/PerDevice/Hobo/TREATED[point]
 ############################################################################
 
-setwd('C:/Data/Bassin-Orgeval/Donnee_Orgeval_Mines/scripts_R')
+setwd('/home/ariviere/Programmes/treat_molonari_mini_field/')
 
 Sys.setenv(TZ='UTC') # to avoid the problem of daylight saving
 
 # path with treated measurements
-pathProcessed = paste0('../Avenelles/processed_data_KC/HZ/')
+pathProcessed = paste0('processed_data/')
 # path with description of measurements
-pathDesc = '../Avenelles/raw_data/DESC_data/DATA_SENSOR/geometrieEtNotices_miniLomos/'
+pathDesc = 'geometrieEtNotices_miniLomos/'
 # path to plot data
-pathPlot = '../plots/PerDevice/Hobo/'
+pathPlot = '/plots/'
 
 # ---- read metaData ----
 
 metaDataFile <- paste0(pathDesc,'/pointsHZ_metadonnees.csv')
-metaData <- read.table(file = metaDataFile,header = T,quote='',sep = ',',dec = '.',colClasses = 'character')
+metaData <- read.table(file = metaDataFile,header = T,quote='',sep = ';',dec = '.',colClasses = 'character')
 # get idx of columns containing depths of temperature probes
 idx_T_depth <- grep(pattern = 'T_depth',x = names(metaData))
 
 # ---- loop over HZ points ----
 
-namePoint = list.files(pathProcessed,pattern = 'point')
+namePoint = list.files(pathProcessed,pattern = 'p')
 
 for (iPoint in 1:length(namePoint)){
   
@@ -72,7 +72,7 @@ for (iPoint in 1:length(namePoint)){
     
     temperatureCols = c('blue',terrain.colors(6))
     
-    png(file = paste0(getwd(),'/../plots/PerDevice/Hobo/TREATED',namePoint[iPoint],'.png'),
+    png(file = paste0(getwd(),'/plots/TREATED',namePoint[iPoint],'.png'),
         width=1200,height=1000,res=150)
     
     # find common date ranges
@@ -91,7 +91,8 @@ for (iPoint in 1:length(namePoint)){
            y=dataP$pressure_differential_m[!is.na(dataP$pressure_differential_m)],
            type='l',main=namePoint[iPoint],
            xlab='dates',ylab='head differential [m]',xaxt='n',lwd=1.5,
-           xlim=as.POSIXct(datesRange))
+           xlim=as.POSIXct(datesRange),ylim=c(min(dataP$pressure_differential_m),max(dataP$pressure_differential_m)))
+          
     }else{
       plot(x=dates_T,y=rep(NA,length(dates_T)),
            type='l',main=namePoint[iPoint],

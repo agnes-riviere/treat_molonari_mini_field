@@ -131,12 +131,12 @@ for (iPoint in 1:length(namePoint)){
                             header=T,sep=',',
                             colClasses=c('character','character','numeric','numeric','numeric','numeric'))
   
-  png(file = paste0(getwd(),'/plots/CLEAN',listHobo[i],'.png'),
+  png(file = paste0(getwd(),'/plots/CLEAN',namePoint[iPoint],'.png'),
       width = 1000,height=700)
   dates_i = strptime( dataTreated$dates,'%d/%m/%Y %H:%M:%S')
   plot(x=dates_i,y=  tsTreated,
-       pch=19,cex=0.3,ylim=range(dataTreated$pressure_differential_m,na.rm=T),
-       main=listHobo[i],xlab='dates',ylab='Delta H [m]',xaxt='n',col="red")
+       pch=19,cex=0.3,ylim=c(min(dataTreated$pressure_differential_m)-0.1,max(dataTreated$pressure_differential_m)+0.1),
+       main=namePoint[iPoint],xlab='dates',ylab='Delta H [m]',xaxt='n',col="red")
   points(x=dates_i,y=  tsTreated_noTcorrection,
          pch=19,cex=0.3)
   axis.POSIXct(side = 1,at = pretty(dates_i),format='%d/%m/%Y')
