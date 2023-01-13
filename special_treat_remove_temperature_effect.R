@@ -2,10 +2,6 @@
 library(tidyverse)
 library(lubridate)
 library(data.table)
-library(lmtest)
-library(car)
-library(stats)
-library(forecast)
 library(ggplot2)
 
 
@@ -32,13 +28,19 @@ metaDataFile <- paste0(pathDesc,'pointsHZ_metadonnees.csv')
 metaData <- read.csv(file = metaDataFile,header = T,
                      sep = ';',dec = '.',colClasses = 'character')
 
+
 # ---- loop over HZ points ----
 
 namePoint = list.files(pathProcessed,pattern = 'p')
 
-iPoint=1
+for (iPoint in 1:length(namePoint)) {
+  sensor="p11_signy1"
+  if(sensor==namePoint[iPoint]) {
+    print(namePoint[iPoint])
 
-print(namePoint[iPoint])
+
+
+
 # empty workspace
 allObjects=ls()
 objectsKeep = c('pathProcessed','pathDesc','pathPlot','metaData','idx_T_depth','namePoint','iPoint')
@@ -181,4 +183,8 @@ write.table(dataTreated,
             file=paste0(pathProcessed,'/',namePoint[iPoint],'/','p_',namePoint[iPoint],
                         '_corectedToHead','.csv'),
             dec='.',row.names=F,sep=',',quote = F)
+
+
+  }
+}
 

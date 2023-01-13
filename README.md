@@ -1,58 +1,117 @@
 
-Traitement des donnees HZ (Molonari-mini)
+Treatment of the hyporheic zone data (mini LOMOS)
 ========================
-The purpose of this script is to process the field data and to transform the pressure differences recorded in volt into cm
-The scripts are in order that they should be executed.
-Il est nécessaire d'avoir télécharger en amont  calibration_molonari_mini dans lequel est contenu calib et scripts_R
+With the help of this script, the field data will be processed, and the pressure differences measured in volts will be converted to centimeters. It treats the field data of the mini LOMOS such as the pressure differential, the stream temperature, and the hyporheic zone temperature profiles. 
+The scripts are in the correct order for execution. You must have calib and scripts R from the calibration molonari mini download.
 
-Les données de terrain doivent être stockées dans treat_molonari_mini_field/raw_data/HOBO_data/
-treat_molonari_mini_field/raw_data/HOBO_data/
+
+It is necessary to store the raw field data in the repository: 'treat_molonari_mini_field/raw_data/HOBO_data'
+
+
+
+
+# required R libraries:
+
+library(tidyverse)
+library(lubridate)
+library(data.table)
+library(lmtest)
+library(stats)
+library(ggplot2)
 
 # 1) geometrieEtNotices_miniLomos
 
-Compléter le fichier pointsHZ_metadonnees.csv avec :
-* nom_du_point;
-* index_du_point;
-* GPS_N;
-* GPS_E;
-* donnees_p; si les données existent mettre 1 sinon 0
-* donnees_t; si les données existent mettre 1 sinon 0
-* donnees_tstream; si les données existent mettre 1 sinon 0
-* donnees_all; si les données existent mettre 1 sinon 0
-* capteur_pression;
-* P_depth_cm;
-* T_depth_1_cm;
-* T_depth_2_cm;
-* T_depth_3_cm;
-* T_depth_4_cm;
-* date_debut_model;
-* date_debut_calib;
-* date_fin;
-* commentaires
+Adding the following fields to the file "pointsHZ metadonnees.csv":
 
-L'entête du fichier doit être : nom_du_point;index_du_point;GPS_N;GPS_E;donnees_p;donnees_t;donnees_tstream;donnees_all;capteur_pression;P_depth_cm;T_depth_1_cm;T_depth_2_cm;T_depth_3_cm;T_depth_4_cm;date_debut_model;date_debut_calib;date_fin;commentaires
+* Point identification 
 
-# 2) syncHZ.R **a utiliser en cas de problème sur le terrain de syncronisation des données.**
-Ce script peut etre lance si la configuration des hobo a mal ete faite sur le terrain.
-Il sert a recuperer des donnee a un intervalle de temps de 15min sur les quarts d'heures réguliers des heures, de maniere a ce que les donnees de pression et de température soient synchrones.
+* index of points 
+
+* GPS_N coordinates;
+
+* GPS_E coordinates; 
+
+* data_p; if data of the pressure diffential exist, set 1; otherwise, set 0. 
+* data_t; if data of the hyporheic zone temperature profile exists, set 1; otherwise, set 0. 
+* donata_tstream; if data of the river temperature exist, set 1; otherwise, set 0. 
+* data_all; if all  data sets exist, set 1; otherwise, set 0. 
+* pressure sensor;
+* P_depth_cm; 
+* T_depth_1_cm; 
+* T_depth_2_cm; 
+* T_depth_3_cm; 
+* T_depth_4_cm; 
+* date_begin_model: This date is not used, but it could be if we want to optimize the ginette application "mini_LOMOS"; 
+* date_begin_calib: This date is not used, but it could be if we want to optimize the ginette application 'mini_LOMOS;
+* date_end: This date is not used, but it could be if we want to optimize the ginette application 'mini_LOMOS;
+* field comments
+
+The file header must contain the following: nom_du_point;index_du_point;GPS_N;GPS_E;donnees_p;donnees_t;donnees_tstream;donnees_all;capteur_pression;P_depth_cm;T_depth_1_cm;T_depth_2_cm;T_depth_3_cm;T_depth_4_cm;date_debut_model;date_debut_calib;date_fin;commentaires
+
+# 2) ** If there is a problem with data synchronization between the hyporheic zone and the stream, use the syncHZ.R script. **
+This script may be executed if the hobo configuration is incorrectly set up during field work.. 
+Its purpose is to retrieve data at 15-minute intervals at regular quarter-hour intervals, synchronizing pressure and temperature data. 
+
 
 # 3) processHobo_mini.R
-lit les donnees HZ (mini-Lomos)
-fait un premier traitement des donnees et enregistre dans processed_data_KC/
+This script reads the raw field data collected with the mini-Lomos sensing device. It performs a preliminary data processing and stores the results in the "processed_data" directory. 
+
 
 # 4) tensionToHead.R
-1) pointsHZ_metadonnees.csv à compléter dans geometrieEtNotices_miniLomos
-2) Vérifier que le capteur de pression est bien calibre dans le répertoire calib
-vous devez avoir calibfit_sensorname.csv avec trois lignes 
-			* Intercept;xxxxxx
-			* dU/dH;xxxxxxx
-			* dU/dT;xxxxxxxxxxxxx
-3) si vous utilise un nouveau capteur vous devez suivre la procedur de calibration et de mise en place des dossier
-De plus, vous devez ajouter le nom du capteur dans la ligne 53 du script R tensionToHead.R
-ce script sert a transformer les donnees de tension mesurees par le capteur de pression en differentiel de charge.
-Il lit les coefficients de calibration dans calibration_molonari_mini/calib
 
-# 5. plotHoboTreated.R
-*plot les donnees traitees des Hobos HZ.
-*Prend en argument les fichiers treated dans **treat_molonari_mini_field/processed_data[point]**
-*Produit le plot dans **plots/TREATED[point]**
+This script is used to convert tension readings from a pressure sensor into charge differentials. 
+The script uses the calibration coefficients found in the 'calibration molonari mini/calib' directory.
+1) Verify that the file "pointsHZ metadonnées.csv" in the "geometrieEtNotices miniLomos" repository is complete. 
+2) Check that the pressure sensor is properly calibrated in the calibration database. 
+The file 'calibfit sensorname.csv' must contain these three lines:: 
+
+* Intercept;xxxxxx
+* dU/dH;xxxxxxx
+ * dU/dT;xxxxxxxxxxxxx
+3) If you are using a new sensor, you must follow the calibration and installation procedures. 
+# 5. plotHoboTreated.
+
+The R script plots measurements of pressure and temperature. It uses the treated files in the **treat_molonari_minifield/processed_data** repository as its argument. 
+* It produces plots in the "plots/TREATED[point]** repertory
+
+
+
+
+#6. special_treat_remove_temperature_effect.R
+
+
+This script could be utilized if the pressure differential data are not temperature-corrected. The most significant issue may stem from the calibration measurements. To utilize this script, you must provide the path setwd ("/home/ariviere/Programmes/treat_molonari_mini_field/') and the name of the point sensor=. All plots are contained in the "plot" directory, while the "processed data" directory contains the corrected data.
+
+
+
+
+The script fits the linear regression model of pressure as a function of temperature data. 
+
+
+
+It calculates the residual time series and plots the residuals (the difference between the observed and predicted values). It can  help you check if the errors are randomly distributed and have constant variance. If the residuals are randomly dispersed around zero, it is an indication that the linear model is appropriate.
+
+
+To check the normality of the residuals, it creates a histogram of the residuals and a normal probability plot (Q-Q plot) to check if the residuals are normally distributed.  
+
+Linear regression models assume that the residuals are normally distributed. To check this assumption, a histogram of the residuals is plotted and/or a normal probability plot (also known as a Q-Q plot) is created. If the residuals are normally distributed, the points on the normal probability plot will fall close to a straight line.
+
+Outliers can have a substantial impact on linear regression models. A scatterplot of the residuals is created to identify any anomalous points.
+
+ Linear regression models assume that the residuals are not correlated. 
+To  check for autocorrelation, a scatterplot of the residuals is created against the order of observations or by using the Ljung-Box test for autocorrelation.
+
+
+
+
+
+Linear regression models assume that the relationship between the independent and dependent variables is linear. You can check for linearity by creating a scatterplot of the independent variable and dependent variable and checking if the points fall roughly along a straight line.
+
+
+
+
+
+
+
+
+
