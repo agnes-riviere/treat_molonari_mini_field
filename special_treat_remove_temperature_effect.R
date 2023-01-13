@@ -59,8 +59,9 @@ data <- data.table(dataP$dates,dataP$pressure_differential_m,dataP$temperature_s
 
 names(data)<-c('dates','pressure','temperature')
 class(data) <- class(as.data.frame(data))
-data <-data[complete.cases(dates), ]
-data$dates<-dmy_hms(data$dates)
+data <-data[complete.cases(data$dates), ]
+data$dates<- strptime( data$dates,'%d/%m/%Y %H:%M:%S')
+data$dates<-ymd_hms(data$dates)
 
 
 # Convert date column to POSIXct format
