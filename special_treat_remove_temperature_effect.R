@@ -48,16 +48,19 @@ rm(list=objectsDel)
 fileP = paste0('p_',namePoint[iPoint],'_treatedToHead.csv')
 dataP = fread(paste0(pathProcessed,namePoint[iPoint],'/',fileP),
                  header=T,sep=',')
-dataP$dates<- strptime(dataP$dates, format="%d/%m/%Y %H:%M:%S")
-dataP$dates<-dmy_hms(dataP$dates)
+class(dataP) <- class(as.data.frame(dataP))
+dataP <-dataP[complete.cases(dataP$dates), ]
+
+
 
 
 # Merge the data
 data <- data.table(dataP$dates,dataP$pressure_differential_m,dataP$temperature_stream_C)
 
 names(data)<-c('dates','pressure','temperature')
+class(data) <- class(as.data.frame(data))
 data <-data[complete.cases(dates), ]
-
+data$dates<-dmy_hms(data$dates)
 
 
 # Convert date column to POSIXct format
@@ -170,3 +173,11 @@ legend('topleft',legend = c(expression('Corrected '*Delta*'H'),expression('Raw '
 
 
 dev.off()
+
+dataTreated=data.table(`#`=dataP$`#`,dates=dataP$dates,pressure_differential_m=data$predicted_pressure,temperature_stream_C=data$temperature)
+
+write.table(dataTreated,
+            file=paste0(pathProcessed,'/',namePoint[iPoint],'/','p_',namePoint[iPoint],
+                        '_corectedToHead','.csv'),
+            dec='.',row.names=F,sep=',',quote = F)
+
